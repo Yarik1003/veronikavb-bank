@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="ru">
+echo "# veronikavb-bank" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/Yarik1003/veronikavb-bank.git
+git push -u origin main
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VeronikaVB - Банк нового поколения</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'TT Commons', 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        :root {
+            --primary: #00A3FF;
+            --primary-dark: #0085D6;
+            --secondary: #FF3366;
+            --accent: #00D4AA;
+            --light: #F5F9FF;
+            --dark: #001A34;
+            --gray: #6C7A89;
+            --border: #E1E8F0;
+            --success: #00C781;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .logo-circle {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 8px 0;
+            position: relative;
+        }
+
+        nav a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        nav a:hover:after {
+            width: 100%;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
+        .btn-login {
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-register {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-login:hover {
+            background: rgba(0, 163, 255, 0.05);
+        }
+
+        .btn-register:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80') no-repeat center right;
+            background-size: cover;
+            opacity: 0.1;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .btn-hero {
+            background: white;
+            color: var(--primary);
+            padding: 14px 36px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-hero:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Features */
+        .features {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            font-size: 2.5rem;
+            color: var(--dark);
+            font-weight: 700;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            background: var(--light);
+            border-radius: 16px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid var(--border);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            color: white;
+            font-size: 1.8rem;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+            font-size: 1.4rem;
+        }
+
+        .feature-card p {
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        /* Forms Section */
+        .forms-section {
+            padding: 100px 0;
+            background: var(--light);
+        }
+
+        .forms-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+        }
+
+        .form-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .form-card p {
+            color: var(--gray);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 163, 255, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .btn-submit {
+            background: var(--primary);
+            color: white;
+            width: 100%;
+            padding: 16px;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            border-radius: 10px;
+        }
+
+        .btn-submit:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Mortgage Calculator */
+        .calculator {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .calculator h4 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .calculator-result {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .calculator-result .amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 10px 0;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 80px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 25px;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column a {
+            color: #A0AEC0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: white;
+        }
+
+        .contact-info li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #A0AEC0;
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--dark);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .forms-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            nav {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: white;
+                padding: 20px;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                transform: translateY(-100%);
+                opacity: 0;
+                transition: all 0.3s;
+                z-index: 999;
+            }
+            
+            nav.active {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .auth-buttons {
+                display: none;
+            }
+            
+            .hero {
+                padding: 80px 0;
+                text-align: center;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <div class="logo-circle">V</div>
+                <span>VeronikaVB</span>
+            </div>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav>
+                <ul>
+                    <li><a href="#">Главная</a></li>
+                    <li><a href="#">Карты</a></li>
+                    <li><a href="#">Кредиты</a></li>
+                    <li><a href="#">Вклады</a></li>
+                    <li><a href="#">Ипотека</a></li>
+                    <li><a href="#">Инвестиции</a></li>
+                </ul>
+            </nav>
+            
+            <div class="auth-buttons">
+                <a href="#" class="btn btn-login">Войти</a>
+                <a href="#" class="btn btn-register">Регистрация</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Банк, который всегда рядом</h1>
+                <p>Современные финансовые решения для комфортной жизни. Выгодные вклады, удобные кредиты и надежные инвестиции.</p>
+                <a href="#" class="btn btn-hero">Открыть счет онлайн</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Почему выбирают VeronikaVB</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Мгновенные решения</h3>
+                    <p>Одобрение кредита онлайн за 5 минут. Переводы между клиентами банка без комиссии.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <h3>Выгодные условия</h3>
+                    <p>Самые конкурентные ставки по вкладам и кредитам на рынке. Кешбэк до 10% по картам.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Надежная защита</h3>
+                    <p>Ваши средства застрахованы. Современные технологии защиты данных и транзакций.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Forms Section -->
+    <section class="forms-section">
+        <div class="container">
+            <h2 class="section-title">Онлайн-заявки</h2>
+            <div class="forms-container">
+                <!-- Registration Form -->
+                <div class="form-card">
+                    <h3>Регистрация</h3>
+                    <p>Создайте аккаунт для доступа ко всем услугам банка</p>
+                    
+                    <form id="registrationForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">Имя</label>
+                                <input type="text" id="firstName" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Фамилия</label>
+                                <input type="text" id="lastName" class="form-control" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Телефон</label>
+                            <input type="tel" id="phone" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password">Пароль</label>
+                            <input type="password" id="password" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirmPassword">Подтверждение пароля</label>
+                            <input type="password" id="confirmPassword" class="form-control" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-submit">Зарегистрироваться</button>
+                    </form>
+                </div>
+                
+                <!-- Mortgage Form -->
+                <div class="form-card">
+                    <h3>Онлайн-заявка на ипотеку</h3>
+                    <p>Рассчитайте условия и подайте заявку на ипотеку</p>
+                    
+                    <form id="mortgageForm">
+                        <div class="form-group">
+                            <label for="propertyCost">Стоимость недвижимости (руб.)</label>
+                            <input type="number" id="propertyCost" class="form-control" value="5000000" min="100000" step="100000" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="initialPayment">Первоначальный взнос (руб.)</label>
+                            <input type="number" id="initialPayment" class="form-control" value="1000000" min="0" step="100000" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="loanTerm">Срок кредита (лет)</label>
+                            <input type="number" id="loanTerm" class="form-control" value="15" min="1" max="30" required>
+                        </div>
+                        
+                        <div class="calculator">
+                            <h4>Предварительный расчет</h4>
+                            <div class="calculator-result">
+                                <div>Ежемесячный платеж</div>
+                                <div class="amount" id="monthlyPayment">32 580 ₽</div>
+                                <div>Ставка от 7.5% годовых</div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="mortgagePhone">Телефон для связи</label>
+                            <input type="tel" id="mortgagePhone" class="form-control" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-submit">Отправить заявку</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>О банке</h3>
+                    <ul>
+                        <li><a href="#">О нас</a></li>
+                        <li><a href="#">Новости</a></li>
+                        <li><a href="#">Вакансии</a></li>
+                        <li><a href="#">Реквизиты</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Услуги</h3>
+                    <ul>
+                        <li><a href="#">Кредитные карты</a></li>
+                        <li><a href="#">Дебетовые карты</a></li>
+                        <li><a href="#">Ипотека</a></li>
+                        <li><a href="#">Автокредиты</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Помощь</h3>
+                    <ul>
+                        <li><a href="#">Отделения и банкоматы</a></li>
+                        <li><a href="#">Частые вопросы</a></li>
+                        <li><a href="#">Тарифы</a></li>
+                        <li><a href="#">Обратная связь</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-phone"></i> 8 800 555-00-00</li>
+                        <li><i class="fas fa-envelope"></i> info@veronikavb.ru</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Москва, Пресненская наб., 10</li>
+                    </ul>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 АО "VeronikaVB". Генеральная лицензия Банка России № 1234 от 12.03.2005</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('nav').classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const nav = document.querySelector('nav');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (!nav.contains(event.target) && !menuBtn.contains(event.target)) {
+                nav.classList.remove('active');
+            }
+        });
+        
+        // Mortgage calculator
+        function calculateMortgage() {
+            const propertyCost = parseFloat(document.getElementById('propertyCost').value);
+            const initialPayment = parseFloat(document.getElementById('initialPayment').value);
+            const loanTerm = parseFloat(document.getElementById('loanTerm').value);
+            
+            const loanAmount = propertyCost - initialPayment;
+            const annualRate = 0.075; // 7.5%
+            const monthlyRate = annualRate / 12;
+            const numberOfPayments = loanTerm * 12;
+            
+            if (loanAmount <= 0) {
+                document.getElementById('monthlyPayment').textContent = '0 ₽';
+                return;
+            }
+            
+            const monthlyPayment = loanAmount * 
+                (monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments)) / 
+                (Math.pow(1 + monthlyRate, numberOfPayments) - 1);
+            
+            document.getElementById('monthlyPayment').textContent = 
+                Math.round(monthlyPayment).toLocaleString('ru-RU') + ' ₽';
+        }
+        
+        // Update mortgage calculation when inputs change
+        document.getElementById('propertyCost').addEventListener('input', calculateMortgage);
+        document.getElementById('initialPayment').addEventListener('input', calculateMortgage);
+        document.getElementById('loanTerm').addEventListener('input', calculateMortgage);
+        
+        // Initial calculation
+        calculateMortgage();
+        
+        // Form submissions
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Регистрация успешно завершена! Проверьте вашу электронную почту для подтверждения.');
+            this.reset();
+        });
+        
+        document.getElementById('mortgageForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Ваша заявка на ипотеку отправлена! Наш специалист свяжется с вами в ближайшее время.');
+            this.reset();
+            calculateMortgage();
+        });
+    </script>
+</body>
+</html>
